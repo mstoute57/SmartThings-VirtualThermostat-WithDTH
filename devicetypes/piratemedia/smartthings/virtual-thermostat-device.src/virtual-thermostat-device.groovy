@@ -28,6 +28,8 @@ metadata {
 		command "setHeatingStatus", ["boolean"]
 		command "setEmergencyMode", ["boolean"]
 		command "setHeatingOff", ["boolean"]
+		command "setHeatingSetpoint", ["number"]
+		command "setCoolingSetpoint", ["number"]
         
 		attribute "temperatureUnit", "string"
 		attribute "targetTemp", "string"
