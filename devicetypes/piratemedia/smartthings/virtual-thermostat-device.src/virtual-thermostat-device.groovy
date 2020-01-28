@@ -4,10 +4,10 @@ metadata {
 		capability "Refresh"
 		capability "Sensor"
 		capability "Thermostat"
-		//capability "Thermostat Heating Setpoint"
+		capability "Thermostat Heating Setpoint"
 		capability "Thermostat Mode"
 		capability "Thermostat Operating State"
-		//capability "Thermostat Setpoint"
+		capability "Thermostat Setpoint"
 		capability "Temperature Measurement"
 		capability "Health Check"
 
