@@ -1,5 +1,5 @@
 metadata {
-	definition (name: "Virtual Thermostat Device", namespace: "piratemedia/smartthings", author: "Eliot S.") {
+	definition (name: "Virtual Thermostat Device", namespace: "piratemedia/smartthings", author: "Anthony S.") {
 		capability "Actuator"
 		capability "Refresh"
 		capability "Sensor"
@@ -158,17 +158,6 @@ metadata {
 	}*/
 }
 
-def shouldReportInCentigrade() {
-    //there is no way to do this dynamically right now, a number of the functions that call this function are compile time evaluated :(
-	return false //Set this to true for Centigrade, false for Fahrenheit  so that enums and colors are correct (due to ST issue of compile time evaluation)
-	/*try {
-    	def ts = getTemperatureScale();
-    	retVal = ts == "C"
-    } finally {
-		return retVal
-    }*/
-}
-
 def installed() {
     log.trace "Executing 'installed'"
     initialize()
@@ -189,24 +178,11 @@ private initialize() {
     sendEvent(name: "heatingSetpoint", value: defaultTemp(), unit: unitString(), displayed: false)
   	sendEvent(name:"thermostatOperatingState", value: "off")
     sendEvent(name:"thermostatMode", value: "heat")
-	state.tempScale = "C"
+	state.tempScale = "F"
 }
 
 def getTempColors() {
 	def colorMap
-        //getTemperatureScale() == "C"   wantMetric()
-	if(shouldReportInCentigrade()) {
-		colorMap = [
-			// Celsius Color Range
-			[value: 0, color: "#153591"],
-			[value: 7, color: "#1e9cbb"],
-			[value: 15, color: "#90d2a7"],
-			[value: 23, color: "#44b621"],
-			[value: 29, color: "#f1d801"],
-			[value: 33, color: "#d04e00"],
-			[value: 36, color: "#bc2323"]
-			]
-	} else {
 		colorMap = [
 			// Fahrenheit Color Range
 			[value: 40, color: "#153591"],
@@ -217,13 +193,12 @@ def getTempColors() {
 			[value: 92, color: "#d04e00"],
 			[value: 96, color: "#bc2323"]
 		]
-	}
 }
 
-def unitString() {  return shouldReportInCentigrade() ? "°C": "°F" }
-def defaultTemp() { return shouldReportInCentigrade() ? 20 : 70 }
-def lowRange() { return shouldReportInCentigrade() ? 9 : 45 }
-def highRange() { return shouldReportInCentigrade() ? 32 : 90 }
+def unitString() {  return "°F" }
+def defaultTemp() { return 70 }
+def lowRange() { return 45 }
+def highRange() { return 90 }
 def getRange() { return "${lowRange()}..${highRange()}" }
 
 def getTemperature() {
