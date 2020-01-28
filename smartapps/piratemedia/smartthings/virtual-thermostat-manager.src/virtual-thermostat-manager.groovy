@@ -43,5 +43,5 @@ def initialize() {
 }
 
 def getTempScale() {
-    return scale ? "F" : "C"
+    return "F"
 }
